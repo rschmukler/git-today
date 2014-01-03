@@ -4,11 +4,14 @@
   "description": "Tells you about your LOC for a given day",
   "main": "index.js",
   "dependencies": {
-    "colors": "~0.6.0-1"
+    "colors": "~0.6.2",
+    "commander": "~2.1.0",
+    "iniparser": "~1.0.5",
+    "batch": "~0.5.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./bin/git-today"
   },
   "repository": {
     "type": "git",

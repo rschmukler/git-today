@@ -1,5 +1,55 @@
-var Report = require('../lib/report.js');
+#!/usr/bin/env node
+require('colors');
 
-var report = new Report('Ryan Schmukler', './');
+var Report = require('../lib/report.js'),
+    iniparser = require('iniparser'),
+    fs = require('fs'),
+    path = require('path');
 
-report.print();
+var gitToday = require('commander');
+
+gitToday.version(require('../package.json').version);
+
+gitToday.option('-a, --author <author>', 'Search commits for the specified author');
+gitToday.option('-d, --directories <dirs>', 'Search in the specified directories', dirList);
+gitToday.option('-m, --multi', 'Print induvidual reports for multiple dirs');
+
+gitToday.parse(process.argv);
+
+// Try and determine default author
+
+if(!gitToday.author) {
+  try {
+    var config = iniparser.parseSync(resolvePath('~/.gitconfig'));
+    if(config.user && config.user.name) gitToday.author = config.user.name;
+  } catch(e) {
+  }
+}
+
+if(!gitToday.author) {
+  errorAndQuit("Author could not be determined, please specify with -a");
+}
+
+
+// Try and determine default directory
+
+if(!gitToday.directories) {
+  if(fs.existsSync('./.git')) gitToday.directories = ['./'];
+}
+
+if(!gitToday.directories) errorAndQuit("Could not determine a directory to run in. Please specify with -d");
+
+function errorAndQuit(msg) {
+  console.log("%s: %s", "Error".red, msg);
+  process.exit();
+}
+
+function dirList(arg) {
+  return arg.split(',').map(function(a) { return resolvePath(a.trim()); });
+}
+
+function resolvePath (string) {
+  if (string.substr(0,1) === '~')
+    string = process.env.HOME + string.substr(1);
+  return path.resolve(string);
+}
