@@ -1,0 +1,5 @@
+var Report = require('../lib/report.js');
+
+var report = new Report('Ryan Schmukler', './');
+
+report.print();

@@ -1,0 +1,28 @@
+{
+  "name": "git-today",
+  "version": "0.1.0",
+  "description": "Tells you about your LOC for a given day",
+  "main": "index.js",
+  "dependencies": {
+    "colors": "~0.6.0-1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rschmukler/git-today.git"
+  },
+  "keywords": [
+    "git",
+    "log",
+    "today",
+    "git-today"
+  ],
+  "author": "Ryan Schmukler <ryan@slingingcode.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rschmukler/git-today/issues"
+  }
+}
