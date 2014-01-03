@@ -1,18 +1,18 @@
 {
   "name": "git-today",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Tells you about your LOC for a given day",
   "main": "index.js",
   "dependencies": {
     "colors": "~0.6.2",
     "commander": "~2.1.0",
     "iniparser": "~1.0.5",
-    "batch": "~0.5.0"
+    "batch": "~0.5.0",
+    "human-interval": "~0.1.2"
   },
+  "bin": "./bin/git-today",
+  "preferGlobal": "true",
   "devDependencies": {},
-  "scripts": {
-    "start": "./bin/git-today"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/rschmukler/git-today.git"

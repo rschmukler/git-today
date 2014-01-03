@@ -3,9 +3,10 @@ require('colors');
 
 var Report = require('../lib/report.js'),
     iniparser = require('iniparser'),
+    humanInterval = require('human-interval'),
+    Batch = require('batch'),
     fs = require('fs'),
     path = require('path');
-
 var gitToday = require('commander');
 
 gitToday.version(require('../package.json').version);
@@ -13,6 +14,7 @@ gitToday.version(require('../package.json').version);
 gitToday.option('-a, --author <author>', 'Search commits for the specified author');
 gitToday.option('-d, --directories <dirs>', 'Search in the specified directories', dirList);
 gitToday.option('-m, --multi', 'Print induvidual reports for multiple dirs');
+gitToday.option('-t, --time <time>', 'Time frame to search within', hourDefaultHumanInterval);
 
 gitToday.parse(process.argv);
 
@@ -30,6 +32,9 @@ if(!gitToday.author) {
   errorAndQuit("Author could not be determined, please specify with -a");
 }
 
+if(gitToday.time) {
+  gitToday.time = gitToday.time /  humanInterval('1 hour');
+}
 
 // Try and determine default directory
 
@@ -38,6 +43,36 @@ if(!gitToday.directories) {
 }
 
 if(!gitToday.directories) errorAndQuit("Could not determine a directory to run in. Please specify with -d");
+
+var batch = new Batch();
+
+var reports = [];
+gitToday.directories.forEach(function(d) {
+  var report = new Report(gitToday.author, d, gitToday.time);
+  reports.push(report);
+  batch.push(report.run.bind(report));
+});
+
+batch.end(function(err) {
+  if(err) return errorAndQuit(err.message);
+  if(gitToday.multi || reports.length == 1) {
+    reports.forEach(function(rep) {
+      console.log("");
+      rep.print();
+    });
+  } else {
+    var results = { files: 0, insertions: 0, deletions: 0, net: 0 };
+    reports.forEach(function(rep) {
+      results.files += rep.results.files;
+      results.insertions += rep.results.insertions;
+      results.deltions += rep.results.deltions;
+      results.net += rep.results.net;
+    });
+    var report = new Report(null, "all directories specified", gitToday.time);
+    report.results = results;
+    report.print();
+  }
+});
 
 function errorAndQuit(msg) {
   console.log("%s: %s", "Error".red, msg);
@@ -48,8 +83,13 @@ function dirList(arg) {
   return arg.split(',').map(function(a) { return resolvePath(a.trim()); });
 }
 
-function resolvePath (string) {
+function resolvePath(string) {
   if (string.substr(0,1) === '~')
     string = process.env.HOME + string.substr(1);
   return path.resolve(string);
+}
+
+function hourDefaultHumanInterval(interval) {
+  if(/^\s*\d*\s*$/.test(interval)) interval = interval + ' days';
+  return humanInterval(interval);
 }
