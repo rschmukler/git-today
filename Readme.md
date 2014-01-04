@@ -22,7 +22,7 @@ Will output:
 Git stats for last 1 day in ./:
   17 files modified
   220 line insertions
-  682 line deleitions
+  682 line deletions
  =======================
   -462 net lines
 ```
@@ -50,7 +50,7 @@ git-today -d ~/Dev/node/kongo,~/Dev/node/agenda
 Git stats for last 1 day in all directories specified:
   7 files modified
   11 line insertions
-  0 line deleitions
+  0 line deletions
  =======================
   -1 net lines
 ```
