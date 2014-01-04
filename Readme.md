@@ -49,10 +49,10 @@ git-today -d ~/Dev/node/kongo,~/Dev/node/agenda
 ```
 Git stats for last 1 day in all directories specified:
   7 files modified
-    11 line insertions
-      0 line deleitions
-       =======================
-         -1 net lines
+  11 line insertions
+  0 line deleitions
+ =======================
+  -1 net lines
 ```
 
 ### -m / --multi
@@ -62,3 +62,7 @@ Used in conjunction with `-d`. Specifies to print each report for the directorie
 ### -t / --time
 
 Time duration to search within. By default, `1 day`. Takes any [humanInterval](https://github.com/rschmukler/humanInterval)
+
+```
+git-today -t "5 days"
+```
