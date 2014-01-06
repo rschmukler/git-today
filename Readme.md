@@ -59,10 +59,39 @@ Git stats for last 1 day in all directories specified:
 
 Used in conjunction with `-d`. Specifies to print each report for the directories instead of one aggregate report
 
+```
+git-today -d ~/Dev/node/kongo,~/Dev/node/agenda -m
+```
+
+```
+Git stats for last 1 day in /Users/ryan/Dev/node/kongo:
+  0 files modified
+  0 line insertions
+  0 line deleitions
+ =======================
+  0 net lines
+
+Git stats for last 1 day in /Users/ryan/Dev/node/agenda:
+  0 files modified
+  0 line insertions
+  0 line deleitions
+ =======================
+  0 net lines
+```
+
 ### -t / --time
 
 Time duration to search within. By default, `1 day`. Takes any [humanInterval](https://github.com/rschmukler/humanInterval)
 
 ```
 git-today -t "5 days"
+```
+
+```
+Git stats for last 5 days in ./:
+  40 files modified
+  742 line insertions
+  167 line deleitions
+ =======================
+  575 net lines
 ```
