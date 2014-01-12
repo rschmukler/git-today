@@ -32,7 +32,7 @@ Git stats for last 1 day in ./:
 
 ### -a / --author
 
-Specify a different author
+Specify a different author. Does not need to be a full match, can just be a partial. (ie. "John" would work for "John Smith")
 
 ```
 git-today -a "Some dude"
