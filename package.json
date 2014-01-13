@@ -1,6 +1,6 @@
 {
   "name": "git-today",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Tells you about your LOC for a given day",
   "main": "index.js",
   "dependencies": {
