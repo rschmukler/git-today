@@ -12,6 +12,7 @@ var gitToday = require('commander');
 gitToday.version(require('../package.json').version);
 
 gitToday.option('-a, --author <author>', 'Search commits for the specified author');
+gitToday.option('-b, --branch <branch>', 'Search for commits on the specified branch (and master)');
 gitToday.option('-d, --directories <dirs>', 'Search in the specified directories', dirList);
 gitToday.option('-m, --multi', 'Print induvidual reports for multiple dirs');
 gitToday.option('-t, --time <time>', 'Time frame to search within', hourDefaultHumanInterval);
@@ -32,6 +33,8 @@ if(!gitToday.author) {
   errorAndQuit("Author could not be determined, please specify with -a");
 }
 
+gitToday.branch = gitToday.branch || 'master';
+
 if(gitToday.time) {
   gitToday.time = gitToday.time /  humanInterval('1 hour');
 }
@@ -48,7 +51,7 @@ var batch = new Batch();
 
 var reports = [];
 gitToday.directories.forEach(function(d) {
-  var report = new Report(gitToday.author, d, gitToday.time);
+  var report = new Report(gitToday.author, d, gitToday.time, gitToday.branch);
   reports.push(report);
   batch.push(report.run.bind(report));
 });

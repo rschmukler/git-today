@@ -38,6 +38,14 @@ Specify a different author. Does not need to be a full match, can just be a part
 git-today -a "Some dude"
 ```
 
+### -b / --branch
+
+Specify a different branch. Branch must exist or git will complain.
+
+```
+git-today -b some-feature
+```
+
 ### -d / --directories
 
 Runs an aggregate report for multiple directories.
